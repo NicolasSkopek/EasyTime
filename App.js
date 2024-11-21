@@ -6,6 +6,7 @@ export default function App() {
   const [selectedType, setSelectedType] = useState('');
   const [alarms, setAlarms] = useState([]);
   const [formData, setFormData] = useState({ dateTime: '', title: '', type: '' });
+  const [editingAlarmIndex, setEditingAlarmIndex] = useState(null);
 
   const toggleForm = () => {
     setIsFormVisible(!isFormVisible);
@@ -13,17 +14,33 @@ export default function App() {
 
   const closeForm = () => {
     setIsFormVisible(false);
+    setEditingAlarmIndex(null);
+    setFormData({ dateTime: '', title: '', type: '' });
+    setSelectedType('');
   };
 
   const handleSave = () => {
     if (formData.dateTime && formData.title && selectedType) {
-      setAlarms([...alarms, { ...formData, type: selectedType }]);
-      setFormData({ dateTime: '', title: '', type: '' });
-      setSelectedType('');
-      setIsFormVisible(false);
+      if (editingAlarmIndex !== null) {
+        
+        const updatedAlarms = [...alarms];
+        updatedAlarms[editingAlarmIndex] = { ...formData, type: selectedType };
+        setAlarms(updatedAlarms);
+      } else {
+        
+        setAlarms([...alarms, { ...formData, type: selectedType }]);
+      }
+      closeForm();
     } else {
       alert('Preencha todos os campos!');
     }
+  };
+
+  const handleEdit = (index) => {
+    setEditingAlarmIndex(index);
+    setFormData(alarms[index]);
+    setSelectedType(alarms[index].type);
+    setIsFormVisible(true);
   };
 
   return (
@@ -50,7 +67,9 @@ export default function App() {
             <Text style={styles.closeButtonText}>X</Text>
           </TouchableOpacity>
 
-          <Text style={styles.formTitle}>Formulário de Alerta</Text>
+          <Text style={styles.formTitle}>
+            {editingAlarmIndex !== null ? 'Editar Alarme' : 'Novo Alarme'}
+          </Text>
 
           {/*data e hora */}
           <TextInput
@@ -87,13 +106,14 @@ export default function App() {
         </View>
       )}
 
-      {/* Lista de alarmes */}
+      {/*lista alarmes*/}
       <View style={styles.alarmsContainer}>
         {alarms.map((alarm, index) => (
           <View key={index} style={styles.alarmItem}>
             <Text style={styles.alarmText}>📅 {alarm.dateTime}</Text>
             <Text style={styles.alarmText}>📌 {alarm.title}</Text>
             <Text style={styles.alarmText}>🛑 {alarm.type}</Text>
+            <Button title="Editar" onPress={() => handleEdit(index)} />
           </View>
         ))}
       </View>
