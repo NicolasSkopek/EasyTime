@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a6eb2022-5113-43cb-b521-f099fa5027e8" name="Changes" comment="alteração de cor" />
+    <list default="true" id="a6eb2022-5113-43cb-b521-f099fa5027e8" name="Changes" comment="configuração IDE" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -18,21 +18,21 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "ryanjuvenal"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;ryanjuvenal&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/NicolasSkopek/EasyTime.git",
-    "accountId": "f82ed6d4-ad96-40b7-accc-95ce49b94825"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/NicolasSkopek/EasyTime.git&quot;,
+    &quot;accountId&quot;: &quot;f82ed6d4-ad96-40b7-accc-95ce49b94825&quot;
   }
-}]]></component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 1
-}]]></component>
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 1
+}</component>
   <component name="ProjectId" id="2pAU4fXjmyAnmdkwIablvp3EHsi" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
@@ -43,6 +43,7 @@
   "keyToString": {
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true"
   }
 }]]></component>
@@ -71,7 +72,15 @@
       <option name="project" value="LOCAL" />
       <updated>1732208411791</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="configuração IDE">
+      <option name="closed" value="true" />
+      <created>1732208833242</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1732208833242</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -87,6 +96,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="alteração de cor" />
-    <option name="LAST_COMMIT_MESSAGE" value="alteração de cor" />
+    <MESSAGE value="configuração IDE" />
+    <option name="LAST_COMMIT_MESSAGE" value="configuração IDE" />
   </component>
 </project>
