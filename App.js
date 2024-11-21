@@ -300,6 +300,6 @@ const styles = StyleSheet.create({
       dateText: {
         top: 9,
         fontSize: 14,
-        color: '#9c9c9c',
+        color: '#9c9a9a',
       },
 });
