@@ -7,6 +7,7 @@ export default function App() {
   const [alarms, setAlarms] = useState([]);
   const [formData, setFormData] = useState({ dateTime: '', title: '', type: '' });
   const [editingAlarmIndex, setEditingAlarmIndex] = useState(null);
+  const [showCalendario, setShowCalendario] = useState(false);
 
   const toggleForm = () => {
     setIsFormVisible(!isFormVisible);
@@ -22,12 +23,12 @@ export default function App() {
   const handleSave = () => {
     if (formData.dateTime && formData.title && selectedType) {
       if (editingAlarmIndex !== null) {
-        
+
         const updatedAlarms = [...alarms];
         updatedAlarms[editingAlarmIndex] = { ...formData, type: selectedType };
         setAlarms(updatedAlarms);
       } else {
-        
+
         setAlarms([...alarms, { ...formData, type: selectedType }]);
       }
       closeForm();
@@ -42,6 +43,32 @@ export default function App() {
     setSelectedType(alarms[index].type);
     setIsFormVisible(true);
   };
+
+  const calendario = () => (
+      <View style={styles.calendarContainer}>
+        <TouchableOpacity style={styles.dayButton} onPress={() => console.log('Domingo')}>
+          <Text style={styles.calendarText}>Domingo</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.dayButton} onPress={() => console.log('Segunda')}>
+          <Text style={styles.calendarText}>Segunda</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.dayButton} onPress={() => console.log('Terça')}>
+          <Text style={styles.calendarText}>   Terça   </Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.dayButton} onPress={() => console.log('Quarta')}>
+          <Text style={styles.calendarText}>  Quarta  </Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.dayButton} onPress={() => console.log('Quinta')}>
+          <Text style={styles.calendarText}>  Quinta  </Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.dayButton} onPress={() => console.log('Sexta')}>
+          <Text style={styles.calendarText}>   Sexta   </Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.dayButton} onPress={() => console.log('Sábado')}>
+          <Text style={styles.calendarText}> Sábado </Text>
+        </TouchableOpacity>
+      </View>
+    );
 
   return (
     <View style={styles.container}>
@@ -72,12 +99,14 @@ export default function App() {
           </Text>
 
           {/*data e hora */}
-          <TextInput
-            style={styles.input}
-            placeholder="Data e horário do alarme"
-            value={formData.dateTime}
-            onChangeText={(text) => setFormData({ ...formData, dateTime: text })}
-          />
+          <TouchableOpacity
+            style={styles.buttonInput}
+            onPress={() => setShowCalendario(!showCalendario)}
+          >
+            <Text style={styles.dateText}> Data e horário do alarme</Text>
+          </TouchableOpacity>
+
+          {showCalendario && calendario()}
 
           {/*titulo*/}
           <TextInput
@@ -202,6 +231,7 @@ const styles = StyleSheet.create({
     height: 30,
     justifyContent: 'center',
     alignItems: 'center',
+    zIndex: 2,
   },
   closeButtonText: {
     color: 'white',
@@ -230,4 +260,46 @@ const styles = StyleSheet.create({
   alarmText: {
     fontSize: 14,
   },
+    buttonInput: {
+      height: 40,
+      borderColor: '#ccc',
+      borderWidth: 1,
+      borderRadius: 5,
+      marginBottom: 15,
+      paddingLeft: 10,
+    },
+     calendarContainer: {
+       position: 'absolute',  // Faz com que o calendário seja posicionado em relação ao pai
+       top: 100,  // Define a distância a partir do topo da tela (ajuste conforme necessário)
+       left: 20,  // Define a distância a partir da esquerda (ajuste conforme necessário)
+       right: 20,  // Garante que o calendário ocupe toda a largura disponível
+       padding: 10,  // Maior padding para tornar o espaço interno maior
+       backgroundColor: '#ededed',
+       borderRadius: 10,  // Bordas mais arredondadas
+       alignItems: 'center',  // Alinha o conteúdo no centro
+       zIndex: 1,  // Faz com que o calendário fique acima dos outros elementos
+       height: '80%',  // Faz com que o calendário ocupe 80% da altura da tela (ajuste conforme necessário)
+     },
+      dayButton: {
+        borderWidth: 0.4,               // Adiciona o contorno ao botão
+        borderColor: '#333',          // Cor do contorno
+        borderRadius: 5,              // Arredonda os cantos do botão
+        paddingVertical: 3,          // Espaçamento vertical dentro do botão
+        paddingHorizontal: 106,        // Espaçamento horizontal dentro do botão
+        margin: 1.5,                    // Espaçamento entre os botões
+        backgroundColor: '#fff',      // Cor de fundo do botão
+        alignItems: 'center',         // Centraliza o texto no botão
+        justifyContent: 'center',     // Centraliza o texto no botão
+      },
+
+      calendarText: {
+        fontSize: 18,
+        color: '#333',
+        textAlign: 'center',         // Garante que o texto fique centralizado
+      },
+      dateText: {
+        top: 9,
+        fontSize: 14,
+        color: '#9c9c9c',
+      },
 });
