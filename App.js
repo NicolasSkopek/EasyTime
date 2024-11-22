@@ -97,49 +97,46 @@ const validateTime = (value, max) => {
 
     [/*Horarios*/]
     const horario = () => (
-      <View style={styles.calendarContainer}>
-        <Text style={styles.calendarText}>Horários para {selectedDay}:</Text>
+      <View style={styles.hourContainer}>
+        <Text style={styles.hourText}>Horários para {selectedDay}:</Text>
 
-        {/* TextInput para adicionar horário */}
+            {/* TextInput para adicionar horário */}
+            <View style={styles.textHourRow}>
               <TextInput
-                style={styles.input}
+                style={styles.inputHour}
                 placeholder="HH"
                 value={hours}
                 onChangeText={handleHoursChange}
                 keyboardType="numeric"
                 maxLength={2}
               />
-              <Text style={styles.colon}>:</Text>
+              <Text style={styles.option}>:</Text>
               <TextInput
-                style={styles.input}
+                style={styles.inputHour}
                 placeholder="MM"
                 value={minutes}
                 onChangeText={handleMinutesChange}
                 keyboardType="numeric"
                 maxLength={2}
               />
+            </View>
 
-           {/* Exibição do horário selecionado */}
+            {/* Exibição do horário selecionado */}
                 <Text style={styles.selectedTime}>
                   Horário selecionado: {hours.padStart(2, '0')}:{minutes.padStart(2, '0')}
                 </Text>
 
-        {/* Botões de ação */}
-              <View style={styles.buttonContainer}>
-                <TouchableOpacity
-                  style={styles.cancelButton}
-                  onPress={() => setSelectHours(false)} // Fecha a seleção de horário
-                >
+            {/* Botões de ação */}              
+            <View style={styles.buttonRow}>
+                <TouchableOpacity style={styles.cancelButton} onPress={() => setSelectHours(false)}>
                   <Text style={styles.buttonText}>Cancelar</Text>
                 </TouchableOpacity>
-                <TouchableOpacity
-                  style={styles.saveButton}
-                  onPress={hourSave} // Salva o horário
-                >
+                <TouchableOpacity style={styles.saveButton} onPress={hourSave}>
                   <Text style={styles.buttonText}>Salvar</Text>
                 </TouchableOpacity>
-              </View>
             </View>
+              
+      </View>
           );
 
 
@@ -351,10 +348,10 @@ const styles = StyleSheet.create({
     },
      calendarContainer: {
        position: 'absolute',  // Faz com que o calendário seja posicionado em relação ao pai
-       top: 100,  // Define a distância a partir do topo da tela (ajuste conforme necessário)
-       left: 20,  // Define a distância a partir da esquerda (ajuste conforme necessário)
-       right: 20,  // Garante que o calendário ocupe toda a largura disponível
-       padding: 10,  // Maior padding para tornar o espaço interno maior
+       top: '30%',  // Define a distância a partir do topo da tela (ajuste conforme necessário)
+       left: '6%',  // Define a distância a partir da esquerda (ajuste conforme necessário)
+       right: '6%',  // Garante que o calendário ocupe toda a largura disponível
+       padding: '3%',  // Maior padding para tornar o espaço interno maior
        backgroundColor: '#ededed',
        borderRadius: 10,  // Bordas mais arredondadas
        alignItems: 'center',  // Alinha o conteúdo no centro
@@ -365,8 +362,8 @@ const styles = StyleSheet.create({
         borderWidth: 0.4,               // Adiciona o contorno ao botão
         borderColor: '#333',          // Cor do contorno
         borderRadius: 5,              // Arredonda os cantos do botão
-        paddingVertical: 3,          // Espaçamento vertical dentro do botão
-        paddingHorizontal: 106,        // Espaçamento horizontal dentro do botão
+        paddingVertical: '1%',          // Espaçamento vertical dentro do botão
+        width:'90%',                    //Definindo para todos terem o mesmo tamanho
         margin: 1.5,                    // Espaçamento entre os botões
         backgroundColor: '#fff',      // Cor de fundo do botão
         alignItems: 'center',         // Centraliza o texto no botão
@@ -383,4 +380,50 @@ const styles = StyleSheet.create({
         fontSize: 14,
         color: '#9c9a9a',
       },
+      hourContainer:{
+        position: 'absolute',  // Faz com que o calendário seja posicionado em relação ao pai
+        top: '0%',  // Define a distância a partir do topo da tela (ajuste conforme necessário)
+        left: '6%',  // Define a distância a partir da esquerda (ajuste conforme necessário)
+        right: '6%',  // Garante que o calendário ocupe toda a largura disponível
+        padding: '3%',  // Maior padding para tornar o espaço interno maior
+        backgroundColor: '#ededed',
+        borderRadius: 10,  // Bordas mais arredondadas
+        alignItems: 'center',  // Alinha o conteúdo no centro
+        justifyContent: 'space-between', // Distribui os elementos verticalmente
+        zIndex: 1,  // Faz com que o calendário fique acima dos outros elementos
+        height: '80%',  // Faz com que o calendário ocupe 80% da altura da tela (ajuste conforme necessário)
+        
+      },
+      buttonRow: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        width: '100%',
+      },
+      cancelButton: {
+        backgroundColor: 'red',
+        borderRadius: 10,
+        paddingVertical: '1%',
+        flex: 1, // Botão ocupa metade do espaço disponível
+        marginRight: 5,
+        alignItems: 'center',
+      },
+      saveButton: {
+        backgroundColor: 'blue',
+        borderRadius: 10,
+        paddingVertical: '1%',
+        flex: 1, // Botão ocupa metade do espaço disponível
+        marginLeft: 5,
+        alignItems: 'center',
+      },
+      inputHour:{
+        borderColor: '#ccc',
+        borderWidth: 1,
+        borderRadius: 5,
+        paddingLeft: '1%',
+        
+      },
+      textHourRow:{
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+      }
 });
