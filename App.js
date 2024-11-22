@@ -124,7 +124,7 @@ export default function App() {
         <Text style={styles.buttonText}>+</Text>
       </TouchableOpacity>
       
-      {/*PopUp*/}
+      {/*Formulário*/}
 
       {/*overlay*/}
       {isFormVisible && <View style={styles.overlay} />}
@@ -216,7 +216,7 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   buttonText: {
-    color: 'black',
+    color: 'white',
     fontSize: 24,
     fontWeight: 'bold',
   },
@@ -231,11 +231,11 @@ const styles = StyleSheet.create({
   },
   formContainer: {
     position: 'absolute',
-    top: 200,
-    left: 20,
-    right: 20,
+    top: '25%',
+    left: "5%",
+    right: "5%",
     backgroundColor: '#f9f9f9',
-    padding: 20,
+    padding: "5%",
     borderRadius: 10,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
@@ -259,28 +259,28 @@ const styles = StyleSheet.create({
   },
   closeButton: {
     position: 'absolute',
-    top: 10,
-    right: 10,
+    top: "4%",
+    right: "4%",
     backgroundColor: '#ff4d4d',
     borderRadius: 20,
-    width: 30,
-    height: 30,
+    width: "9%",
+    height: "9%",
     justifyContent: 'center',
     alignItems: 'center',
     zIndex: 2,
   },
   closeButtonText: {
     color: 'white',
-    fontSize: 18,
+    fontSize: hp(2.5),
     fontWeight: 'bold',
   },
   option: {
-    fontSize: 16,
-    marginVertical: 5,
+    fontSize: hp(2.1),
+    marginVertical: "1.5%",
   },
   selectedOption: {
-    fontSize: 16,
-    marginVertical: 5,
+    fontSize: hp(2.1),
+    marginVertical: "1.5%",
     fontWeight: 'bold',
     color: '#563391',
   },
