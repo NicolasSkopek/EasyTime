@@ -48,7 +48,54 @@ export default function App() {
     setIsFormVisible(true);
   };
 
-  
+  [/*Dias da semana*/]
+  const calendario = () => (
+    <View style={styles.calendarContainer}>
+      {['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'].map((day) => (
+        <TouchableOpacity
+          key={day}
+          style={styles.dayButton}
+          onPress={() => {
+            setSelectedDay(day); // Atualiza o dia selecionado
+            setSelectHours(true); // Exibe o componente "horario"
+          }}
+        >
+          <Text style={styles.calendarText}>{day}</Text>
+        </TouchableOpacity>
+      ))}
+
+      {/* Exibe o componente "horario" se um dia foi selecionado */}
+      {selectHours && horario()}
+    </View>
+  );
+
+    [/*Horarios*/]
+    const horario = () => (
+      <View style={styles.calendarContainer}>
+        <Text style={styles.calendarText}>Horários para {selectedDay}:</Text>
+
+        {/* TextInput para adicionar horário */}
+        <TextInput
+          style={styles.input}
+          placeholder="Digite o horário"
+          value={selectedTime} // Assume que você tem um estado `selectedTime` para armazenar o valor
+          onChangeText={(text) => setSelectedTime(text)} // Atualiza o estado com o horário digitado
+          keyboardType="default" // Definido como numérico, se o formato for para horas/minutos
+        />
+
+        {/* Botão para cancelar */}
+        <TouchableOpacity
+          style={styles.dayButton}
+          onPress={() => setSelectHours(false)} // Fecha o horário
+        >
+          <Text style={styles.calendarText}>Cancelar</Text>
+        </TouchableOpacity>
+
+        {/*Criar  lógica de salvamento*/}
+        <Button title="Salvar" onPress={handleSave} />
+
+      </View>
+    );
 
 
   return (
