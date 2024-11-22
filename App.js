@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View, TouchableOpacity, TextInput, Button, Image } from 'react-native';
 import React, { useState } from 'react';
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
 export default function App() {
   const [isFormVisible, setIsFormVisible] = useState(false);
@@ -47,68 +48,36 @@ export default function App() {
     setIsFormVisible(true);
   };
 
-  [/*Dias da semana*/]
-  const calendario = () => (
-    <View style={styles.calendarContainer}>
-      {['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'].map((day) => (
-        <TouchableOpacity
-          key={day}
-          style={styles.dayButton}
-          onPress={() => {
-            setSelectedDay(day); // Atualiza o dia selecionado
-            setSelectHours(true); // Exibe o componente "horario"
-          }}
-        >
-          <Text style={styles.calendarText}>{day}</Text>
-        </TouchableOpacity>
-      ))}
-
-      {/* Exibe o componente "horario" se um dia foi selecionado */}
-      {selectHours && horario()}
-    </View>
-  );
-
-    [/*Horarios*/]
-    const horario = () => (
-      <View style={styles.calendarContainer}>
-        <Text style={styles.calendarText}>Horários para {selectedDay}:</Text>
-
-        {/* TextInput para adicionar horário */}
-        <TextInput
-          style={styles.input}
-          placeholder="Digite o horário"
-          value={selectedTime} // Assume que você tem um estado `selectedTime` para armazenar o valor
-          onChangeText={(text) => setSelectedTime(text)} // Atualiza o estado com o horário digitado
-          keyboardType="default" // Definido como numérico, se o formato for para horas/minutos
-        />
-
-        {/* Botão para cancelar */}
-        <TouchableOpacity
-          style={styles.dayButton}
-          onPress={() => setSelectHours(false)} // Fecha o horário
-        >
-          <Text style={styles.calendarText}>Cancelar</Text>
-        </TouchableOpacity>
-
-        {/*Criar  lógica de salvamento*/}
-        <Button title="Salvar" onPress={handleSave} />
-
-      </View>
-    );
+  
 
 
   return (
     <View style={styles.container}>
-      {/*imagem*/}
-      <Image
-        style={styles.image}
-        source={require('./src/images/logo.png')}
-      />
+      {/*Header*/}
+          <View style={styles.header}>
+          <Text style={styles.headerText}>Easy Time</Text>
+          </View>
+          
+      {/*Main*/}
 
-      {/*botão*/}
+        {/*lista alarmes*/}
+          <View style={styles.alarmsContainer}>
+            {alarms.map((alarm, index) => (
+              <View key={index} style={styles.alarmItem}>
+                <Text style={styles.alarmText}>📅 {alarm.dateTime}</Text>
+                <Text style={styles.alarmText}>📌 {alarm.title}</Text>
+                <Text style={styles.alarmText}>🛑 {alarm.type}</Text>
+                <Button title="Editar" onPress={() => handleEdit(index)} />
+              </View>
+           ))}
+          </View>
+
+      {/*Adicionar*/}
       <TouchableOpacity style={styles.floatingButton} onPress={toggleForm}>
         <Text style={styles.buttonText}>+</Text>
       </TouchableOpacity>
+      
+      {/*PopUp*/}
 
       {/*overlay*/}
       {isFormVisible && <View style={styles.overlay} />}
@@ -162,17 +131,6 @@ export default function App() {
         </View>
       )}
 
-      {/*lista alarmes*/}
-      <View style={styles.alarmsContainer}>
-        {alarms.map((alarm, index) => (
-          <View key={index} style={styles.alarmItem}>
-            <Text style={styles.alarmText}>📅 {alarm.dateTime}</Text>
-            <Text style={styles.alarmText}>📌 {alarm.title}</Text>
-            <Text style={styles.alarmText}>🛑 {alarm.type}</Text>
-            <Button title="Editar" onPress={() => handleEdit(index)} />
-          </View>
-        ))}
-      </View>
     </View>
   );
 }
@@ -180,20 +138,24 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
-    padding: 20,
+    backgroundColor: 'white'
   },
-  image: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    width: 380,
-    height: 180,
+  header: {
+    height: '15%',
+    backgroundColor: '#533971',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  headerText: {
+    position:'absolute',
+    color:'white',
+    fontSize: hp(6)
+
   },
   floatingButton: {
     position: 'absolute',
-    bottom: 20,
-    right: 20,
+    bottom: '4%',
+    right: "7%",
     backgroundColor: '#563391',
     width: 60,
     height: 60,
