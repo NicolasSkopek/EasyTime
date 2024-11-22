@@ -12,6 +12,8 @@ export default function App() {
   const [selectHours, setSelectHours] = useState(false);
   const [selectedDay, setSelectedDay] = useState(null);
   const [selectedTime, setSelectedTime] = useState('');
+  const [hours, setHours] = useState('');
+  const [minutes, setMinutes] = useState('');
 
   const toggleForm = () => {
     setIsFormVisible(!isFormVisible);
@@ -69,33 +71,76 @@ export default function App() {
     </View>
   );
 
+ {/*Formatação horario*/}
+const validateTime = (value, max) => {
+    const numericValue = value.replace(/[^0-9]/g, ''); // Permite apenas números
+    return numericValue.slice(0, 2) <= max ? numericValue.slice(0, 2) : max;
+  };
+
+  const handleHoursChange = (text) => {
+    setHours(validateTime(text, 23)); // Limita horas entre 0 e 23
+  };
+
+  const handleMinutesChange = (text) => {
+    setMinutes(validateTime(text, 59)); // Limita minutos entre 0 e 59
+  };
+
+  const hourSave = () => {
+    if (hours && minutes) {
+      const formattedTime = `${hours.padStart(2, '0')}:${minutes.padStart(2, '0')}`;
+      console.log(`Horário salvo: ${formattedTime}`);
+      setSelectHours(false); // Fecha o componente após salvar
+    } else {
+      alert('Por favor, insira um horário válido!');
+    }
+  };
+
     [/*Horarios*/]
     const horario = () => (
       <View style={styles.calendarContainer}>
         <Text style={styles.calendarText}>Horários para {selectedDay}:</Text>
 
         {/* TextInput para adicionar horário */}
-        <TextInput
-          style={styles.input}
-          placeholder="Digite o horário"
-          value={selectedTime} // Assume que você tem um estado `selectedTime` para armazenar o valor
-          onChangeText={(text) => setSelectedTime(text)} // Atualiza o estado com o horário digitado
-          keyboardType="default" // Definido como numérico, se o formato for para horas/minutos
-        />
+              <TextInput
+                style={styles.input}
+                placeholder="HH"
+                value={hours}
+                onChangeText={handleHoursChange}
+                keyboardType="numeric"
+                maxLength={2}
+              />
+              <Text style={styles.colon}>:</Text>
+              <TextInput
+                style={styles.input}
+                placeholder="MM"
+                value={minutes}
+                onChangeText={handleMinutesChange}
+                keyboardType="numeric"
+                maxLength={2}
+              />
 
-        {/* Botão para cancelar */}
-        <TouchableOpacity
-          style={styles.dayButton}
-          onPress={() => setSelectHours(false)} // Fecha o horário
-        >
-          <Text style={styles.calendarText}>Cancelar</Text>
-        </TouchableOpacity>
+           {/* Exibição do horário selecionado */}
+                <Text style={styles.selectedTime}>
+                  Horário selecionado: {hours.padStart(2, '0')}:{minutes.padStart(2, '0')}
+                </Text>
 
-        {/*Criar  lógica de salvamento*/}
-        <Button title="Salvar" onPress={handleSave} />
-
-      </View>
-    );
+        {/* Botões de ação */}
+              <View style={styles.buttonContainer}>
+                <TouchableOpacity
+                  style={styles.cancelButton}
+                  onPress={() => setSelectHours(false)} // Fecha a seleção de horário
+                >
+                  <Text style={styles.buttonText}>Cancelar</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.saveButton}
+                  onPress={hourSave} // Salva o horário
+                >
+                  <Text style={styles.buttonText}>Salvar</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          );
 
 
   return (
