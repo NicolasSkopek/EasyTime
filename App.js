@@ -1,6 +1,6 @@
-import { StyleSheet, Text, View, TouchableOpacity, TextInput, Button, Image } from 'react-native';
 import React, { useState } from 'react';
-import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import { StyleSheet, Text, View, TouchableOpacity, TextInput, Button } from 'react-native';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 export default function App() {
   const [isFormVisible, setIsFormVisible] = useState(false);
@@ -10,8 +10,7 @@ export default function App() {
   const [editingAlarmIndex, setEditingAlarmIndex] = useState(null);
   const [showCalendario, setShowCalendario] = useState(false);
   const [selectHours, setSelectHours] = useState(false);
-  const [selectedDay, setSelectedDay] = useState(null);
-  const [selectedTime, setSelectedTime] = useState('');
+  const [selectedDay, setSelectedDay] = useState('');
   const [hours, setHours] = useState('');
   const [minutes, setMinutes] = useState('');
 
@@ -29,12 +28,10 @@ export default function App() {
   const handleSave = () => {
     if (formData.dateTime && formData.title && selectedType) {
       if (editingAlarmIndex !== null) {
-
         const updatedAlarms = [...alarms];
         updatedAlarms[editingAlarmIndex] = { ...formData, type: selectedType };
         setAlarms(updatedAlarms);
       } else {
-
         setAlarms([...alarms, { ...formData, type: selectedType }]);
       }
       closeForm();
@@ -50,7 +47,31 @@ export default function App() {
     setIsFormVisible(true);
   };
 
-  [/*Dias da semana*/]
+  const validateTime = (value, max) => {
+    const numericValue = value.replace(/[^0-9]/g, '');
+    return numericValue.slice(0, 2) <= max ? numericValue.slice(0, 2) : max;
+  };
+
+  const handleHoursChange = (text) => {
+    setHours(validateTime(text, 23));
+  };
+
+  const handleMinutesChange = (text) => {
+    setMinutes(validateTime(text, 59));
+  };
+
+  const hourSave = () => {
+    if (hours && minutes && selectedDay) {
+      const formattedTime = `${hours.padStart(2, '0')}:${minutes.padStart(2, '0')}`;
+      const formattedDateTime = `${selectedDay}, ${formattedTime}`;
+      setFormData({ ...formData, dateTime: formattedDateTime });
+      setSelectHours(false);
+      setShowCalendario(false);
+    } else {
+      alert('Por favor, insira um horário válido e selecione um dia!');
+    }
+  };
+
   const calendario = () => (
     <View style={styles.calendarContainer}>
       {['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'].map((day) => (
@@ -58,168 +79,108 @@ export default function App() {
           key={day}
           style={styles.dayButton}
           onPress={() => {
-            setSelectedDay(day); // Atualiza o dia selecionado
-            setSelectHours(true); // Exibe o componente "horario"
+            setSelectedDay(day);
+            setSelectHours(true);
           }}
         >
           <Text style={styles.calendarText}>{day}</Text>
         </TouchableOpacity>
       ))}
-
-      {/* Exibe o componente "horario" se um dia foi selecionado */}
       {selectHours && horario()}
     </View>
   );
 
- {/*Formatação horario*/}
-const validateTime = (value, max) => {
-    const numericValue = value.replace(/[^0-9]/g, ''); // Permite apenas números
-    return numericValue.slice(0, 2) <= max ? numericValue.slice(0, 2) : max;
-  };
-
-  const handleHoursChange = (text) => {
-    setHours(validateTime(text, 23)); // Limita horas entre 0 e 23
-  };
-
-  const handleMinutesChange = (text) => {
-    setMinutes(validateTime(text, 59)); // Limita minutos entre 0 e 59
-  };
-
-  const hourSave = () => {
-    if (hours && minutes) {
-      const formattedTime = `${hours.padStart(2, '0')}:${minutes.padStart(2, '0')}`;
-      console.log(`Horário salvo: ${formattedTime}`);
-      setSelectHours(false); // Fecha o componente após salvar
-    } else {
-      alert('Por favor, insira um horário válido!');
-    }
-  };
-
-    [/*Horarios*/]
-    const horario = () => (
-      <View style={styles.hourContainer}>
-        <Text style={styles.hourText}>Horários para {selectedDay}:</Text>
-
-            {/* TextInput para adicionar horário */}
-            <View style={styles.textHourRow}>
-              <TextInput
-                style={styles.inputHour}
-                placeholder="HH"
-                value={hours}
-                onChangeText={handleHoursChange}
-                keyboardType="numeric"
-                maxLength={2}
-              />
-              <Text style={styles.option}>:</Text>
-              <TextInput
-                style={styles.inputHour}
-                placeholder="MM"
-                value={minutes}
-                onChangeText={handleMinutesChange}
-                keyboardType="numeric"
-                maxLength={2}
-              />
-            </View>
-
-            {/* Exibição do horário selecionado */}
-                <Text style={styles.selectedTime}>
-                  Horário selecionado: {hours.padStart(2, '0')}:{minutes.padStart(2, '0')}
-                </Text>
-
-            {/* Botões de ação */}              
-            <View style={styles.buttonRow}>
-                <TouchableOpacity style={styles.cancelButton} onPress={() => setSelectHours(false)}>
-                  <Text style={styles.buttonText}>Cancelar</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.saveButton} onPress={hourSave}>
-                  <Text style={styles.buttonText}>Salvar</Text>
-                </TouchableOpacity>
-            </View>
-              
+  const horario = () => (
+    <View style={styles.hourContainer}>
+      <Text style={styles.hourText}>Horários para {selectedDay}:</Text>
+      <View style={styles.textHourRow}>
+        <TextInput
+          style={styles.inputHour}
+          placeholder="HH"
+          value={hours}
+          onChangeText={handleHoursChange}
+          keyboardType="numeric"
+          maxLength={2}
+        />
+        <Text style={styles.option}>:</Text>
+        <TextInput
+          style={styles.inputHour}
+          placeholder="MM"
+          value={minutes}
+          onChangeText={handleMinutesChange}
+          keyboardType="numeric"
+          maxLength={2}
+        />
       </View>
-          );
-
+      <Text style={styles.selectedTime}>
+        Horário selecionado: {hours.padStart(2, '0')}:{minutes.padStart(2, '0')}
+      </Text>
+      <View style={styles.buttonRow}>
+        <TouchableOpacity style={styles.cancelButton} onPress={() => setSelectHours(false)}>
+          <Text style={styles.buttonText}>Cancelar</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.saveButton} onPress={hourSave}>
+          <Text style={styles.buttonText}>Salvar</Text>
+        </TouchableOpacity>
+      </View>
+    </View>
+  );
 
   return (
     <View style={styles.container}>
-      {/*Header*/}
-          <View style={styles.header}>
-          <Text style={styles.headerText}>Easy Time</Text>
+      <View style={styles.header}>
+        <Text style={styles.headerText}>Easy Time</Text>
+      </View>
+      <View style={styles.alarmsContainer}>
+        {alarms.map((alarm, index) => (
+          <View key={index} style={styles.alarmItem}>
+            <Text style={styles.alarmText}>📅 {alarm.dateTime}</Text>
+            <Text style={styles.alarmText}>📌 {alarm.title}</Text>
+            <Text style={styles.alarmText}>🛑 {alarm.type}</Text>
+            <Button title="Editar" onPress={() => handleEdit(index)} />
           </View>
-          
-      {/*Main*/}
-
-        {/*lista alarmes*/}
-          <View style={styles.alarmsContainer}>
-            {alarms.map((alarm, index) => (
-              <View key={index} style={styles.alarmItem}>
-                <Text style={styles.alarmText}>📅 {alarm.dateTime}</Text>
-                <Text style={styles.alarmText}>📌 {alarm.title}</Text>
-                <Text style={styles.alarmText}>🛑 {alarm.type}</Text>
-                <Button title="Editar" onPress={() => handleEdit(index)} />
-              </View>
-           ))}
-          </View>
-
-      {/*Adicionar*/}
+        ))}
+      </View>
       <TouchableOpacity style={styles.floatingButton} onPress={toggleForm}>
         <Text style={styles.buttonText}>+</Text>
       </TouchableOpacity>
-      
-      {/*Formulário*/}
-
-      {/*overlay*/}
       {isFormVisible && <View style={styles.overlay} />}
-
-      {/*formulário*/}
       {isFormVisible && (
         <View style={styles.formContainer}>
-          {/*fechar*/}
           <TouchableOpacity style={styles.closeButton} onPress={closeForm}>
             <Text style={styles.closeButtonText}>X</Text>
           </TouchableOpacity>
-
           <Text style={styles.formTitle}>
             {editingAlarmIndex !== null ? 'Editar Alarme' : 'Novo Alarme'}
           </Text>
-
-          {/*data e hora */}
           <TouchableOpacity
             style={styles.buttonInput}
             onPress={() => setShowCalendario(!showCalendario)}
           >
             <Text style={styles.dateText}> Data e horário do alarme</Text>
           </TouchableOpacity>
-
           {showCalendario && calendario()}
-
-          {/*titulo*/}
           <TextInput
             style={styles.input}
             placeholder="Digite o título"
             value={formData.title}
             onChangeText={(text) => setFormData({ ...formData, title: text })}
           />
-
-          {/*tipos de alarme*/}
           <Text>Escolha o tipo de alarme:</Text>
-          <TouchableOpacity onPress={() => setSelectedType('Medicamento')}>
-            <Text style={selectedType === 'Medicamento' ? styles.selectedOption : styles.option}>Medicamento</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => setSelectedType('Atividade Física')}>
-            <Text style={selectedType === 'Atividade Física' ? styles.selectedOption : styles.option}>Atividade Física</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => setSelectedType('Consulta Médica')}>
-            <Text style={selectedType === 'Consulta Médica' ? styles.selectedOption : styles.option}>Consulta Médica</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => setSelectedType('Outro')}>
-            <Text style={selectedType === 'Outro' ? styles.selectedOption : styles.option}>Outro</Text>
-          </TouchableOpacity>
-
+          {['Medicamento', 'Atividade Física', 'Consulta Médica', 'Outro'].map((type) => (
+            <TouchableOpacity key={type} onPress={() => setSelectedType(type)}>
+              <Text
+                style={
+                  selectedType === type ? styles.selectedOption : styles.option
+                }
+              >
+                {type}
+              </Text>
+            </TouchableOpacity>
+          ))}
           <Button title="Salvar" onPress={handleSave} />
         </View>
       )}
-
     </View>
   );
 }
