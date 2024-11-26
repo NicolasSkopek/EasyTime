@@ -171,7 +171,7 @@ export default function App() {
             value={formData.title}
             onChangeText={(text) => setFormData({ ...formData, title: text })}
           />
-          <Text>Escolha o tipo de alarme:</Text>
+          <Text style={styles.formTitle}>Escolha o tipo de alarme:</Text>
           {['Medicamento', 'Atividade Física', 'Consulta Médica', 'Outro'].map((type) => (
             <TouchableOpacity key={type} onPress={() => setSelectedType(type)}>
               <Text
@@ -253,7 +253,7 @@ const styles = StyleSheet.create({
     zIndex: 2,
   },
   formTitle: {
-    fontSize: 18,
+    fontSize: hp(3),
     fontWeight: 'bold',
     marginBottom: 10,
   },
@@ -283,7 +283,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   option: {
-    fontSize: hp(2.1),
+    fontSize: hp(1.7),
     marginVertical: "1.5%",
   },
   selectedOption: {
@@ -364,7 +364,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',  // Alinha o conteúdo no centro
         justifyContent: 'space-between', // Distribui os elementos verticalmente
         zIndex: 1,  // Faz com que o calendário fique acima dos outros elementos
-        height: '80%',  // Faz com que o calendário ocupe 80% da altura da tela (ajuste conforme necessário)
+        height: '100%',  // Faz com que o calendário ocupe 80% da altura da tela (ajuste conforme necessário)
         
       },
       buttonRow: {
@@ -373,7 +373,7 @@ const styles = StyleSheet.create({
         width: '100%',
       },
       cancelButton: {
-        backgroundColor: 'red',
+        backgroundColor: '#ff4d4d',
         borderRadius: 10,
         paddingVertical: '1%',
         flex: 1, // Botão ocupa metade do espaço disponível
@@ -381,7 +381,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
       },
       saveButton: {
-        backgroundColor: 'blue',
+        backgroundColor: '#2196F3',
         borderRadius: 10,
         paddingVertical: '1%',
         flex: 1, // Botão ocupa metade do espaço disponível
