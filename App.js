@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, TextInput, Button } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, TextInput, Button, ScrollView } from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 export default function App() {
@@ -131,16 +131,21 @@ export default function App() {
       <View style={styles.header}>
         <Text style={styles.headerText}>Easy Time</Text>
       </View>
-      <View style={styles.alarmsContainer}>
-        {alarms.map((alarm, index) => (
-          <View key={index} style={styles.alarmItem}>
-            <Text style={styles.alarmText}>📅 {alarm.dateTime}</Text>
-            <Text style={styles.alarmText}>📌 {alarm.title}</Text>
-            <Text style={styles.alarmText}>🛑 {alarm.type}</Text>
-            <Button title="Editar" onPress={() => handleEdit(index)} />
-          </View>
-        ))}
+
+      <View style={styles.alarmCards}>
+        <ScrollView contentContainerStyle={styles.alarmsContainer}>
+          {alarms.map((alarm, index) => (
+            <View key={index} style={styles.alarmItem}>
+              <Text style={styles.alarmText}>📅 {alarm.dateTime}</Text>
+              <Text style={styles.alarmText}>📌 {alarm.title}</Text>
+              <Text style={styles.alarmText}>🛑 {alarm.type}</Text>
+              <Button title="Editar" onPress={() => handleEdit(index)} />
+            </View>
+          ))}
+        </ScrollView>
       </View>
+
+
       <TouchableOpacity style={styles.floatingButton} onPress={toggleForm}>
         <Text style={styles.buttonText}>+</Text>
       </TouchableOpacity>
@@ -287,14 +292,21 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#563391',
   },
+  alarmCards:{
+    flex: 1,
+    padding: 16,
+  },
   alarmsContainer: {
-    marginTop: 170,
+    flexDirection: 'row', // Itens em linha
+    flexWrap: 'wrap', // Quebra para próxima linha
+    justifyContent: 'flex-start', // Alinhar ao início
   },
   alarmItem: {
     backgroundColor: '#f3f3f3',
     padding: 10,
-    marginVertical: 5,
+    margin: 5, // Espaçamento uniforme ao redor do card
     borderRadius: 5,
+    width: '45%', // Largura proporcional para 2 itens por linha
   },
   alarmText: {
     fontSize: 14,
